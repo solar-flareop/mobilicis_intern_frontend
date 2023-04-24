@@ -2,6 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const columns = [
   { field: "id", headerName: "ID", width: 54 },
@@ -18,6 +19,7 @@ const columns = [
 
 const Table = ({ url }) => {
   const [rows, setRows] = useState([]);
+  const matches = useMediaQuery("(min-width:600px)");
   useEffect(() => {
     try {
       const getData = async () => {
@@ -30,7 +32,13 @@ const Table = ({ url }) => {
     }
   }, [url]);
   return (
-    <div style={{ height: 425, width: "100%", overflowX: "hidden" }}>
+    <div
+      style={
+        matches
+          ? { height: 425, width: "100%", overflowX: "hidden" }
+          : { height: 500, width: "100%", overflowX: "hidden" }
+      }
+    >
       {rows.length > 0 ? (
         <DataGrid
           rows={rows}
